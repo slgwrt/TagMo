@@ -1,4 +1,18 @@
-# TagMo's development is currently stagnant. If you want to contribute, please make sure to adress your PRs to the 'master2' branch, in order to keep it seperate from the original master. TagMo itself still works in it's current state. Thank you.
+# TagMo's default branch is stable. 
+
+If you want to contribute, please make sure to adress your PRs to the 'experimental' branch of this repository in order to keep them seperate from the stable project. Thank you.
+
+Current Stable
+https://github.com/HiddenRamblings/TagMo/tree/master
+
+Current Testing
+https://github.com/HiddenRamblings/TagMo/tree/experimental
+
+Archived Master
+https://github.com/HiddenRamblings/TagMo/tree/master-archive
+
+Archived Testing
+https://github.com/HiddenRamblings/TagMo/tree/master2
 
 
 # What is TagMo?
