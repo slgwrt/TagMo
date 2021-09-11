@@ -2,9 +2,7 @@ name: Android CI
 
 on:
   push:
-    branches: [ experimental ]
-  pull_request:
-    branches: [ experimental ]
+    branches: [ master ]
 
 jobs:
   build:
@@ -52,7 +50,7 @@ jobs:
     - uses: marvinpinto/action-automatic-releases@v1.2.1
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "latest"
+        automatic_release_tag: "master"
         prerelease: false
         title: TagMo-${{ env.GIT_HASH }}
         files: ${{steps.sign_app.outputs.signedReleaseFile}}
