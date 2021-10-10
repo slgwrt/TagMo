@@ -9,8 +9,9 @@ import android.nfc.tech.NfcA;
 import java.io.IOException;
 
 public class TagWriter {
-        private final MifareUltralight m_mifare;
-    private static final String TAG = TagWriter.class.getSimpleName();
+  private final MifareUltralight m_mifare;
+    private final NfcA m_nfcA;
+        private static final String TAG = TagWriter.class.getSimpleName();
     
 
     private static final byte[] POWERTAG_SIGNATURE = Util.hexStringToByteArray("213C65444901602985E9F6B50CACB9C8CA3C4BCD13142711FF571CF01E66BD6F");
@@ -23,6 +24,24 @@ public class TagWriter {
 public TagWriter(MifareUltralight mifare) {
         m_nfcA = null;
         m_mifare = mifare;
+    }
+
+    public TagWriter(NfcA nfcA) {
+        m_nfcA = nfcA;
+        m_mifare = null;
+    }
+
+    public static TagWriter get(Tag tag) {
+        MifareUltralight mifare = MifareUltralight.get(tag);
+        if (mifare != null)
+            return new NTAG215(mifare);
+        NfcA nfcA = NfcA.get(tag);
+        if (nfcA != null) {
+            if (nfcA.getSak() == 0x00 && tag.getId()[0] == NXP_MANUFACTURER_ID)
+                return new NTAG215(nfcA);
+        }
+
+        return null;
     }
         
     public static void writeToTagRaw(NTAG215 mifare, byte[] tagData, boolean validateNtag) throws Exception {
