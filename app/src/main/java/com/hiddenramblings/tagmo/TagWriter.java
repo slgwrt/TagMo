@@ -2,10 +2,16 @@ package com.hiddenramblings.tagmo;
 
 import com.hiddenramblings.tagmo.ptag.PTagKeyManager;
 
+import android.nfc.Tag;
+import android.nfc.tech.MifareUltralight;
+import android.nfc.tech.NfcA;
+
 import java.io.IOException;
 
 public class TagWriter {
+        private final MifareUltralight m_mifare
     private static final String TAG = TagWriter.class.getSimpleName();
+    
 
     private static final byte[] POWERTAG_SIGNATURE = Util.hexStringToByteArray("213C65444901602985E9F6B50CACB9C8CA3C4BCD13142711FF571CF01E66BD6F");
     private static final byte[] POWERTAG_IDPAGES = Util.hexStringToByteArray("04070883091012131800000000000000");
@@ -227,7 +233,9 @@ public class TagWriter {
     static void writePages(NTAG215 tag, int pagestart, int pageend, byte[][] data) throws Exception {
         byte[] bigdata = new byte[(pageend-pagestart+1)*6];
         for (int i = pagestart,j = 0; i <= pageend; i++,j ++) {
-            tag.writePage(i, data[i]);
+            //tag.writePage(i, data[i]);//old
+            m_mifare.writePage(pageOffset, data);
+            
             TagMo.Debug(TAG, R.string.write_page, String.valueOf(i));
            //writepage-cdoe
             byte[] cdata = data[i];
@@ -245,7 +253,7 @@ public class TagWriter {
         for(int iii =last -12;iii>0;iii-=12){
             str.insert(iii,',');
         }
-        throw new Exception(str.toString());     
+        //throw new Exception(str.toString());     
     }
 
     static void writePassword(NTAG215 tag) throws IOException {
