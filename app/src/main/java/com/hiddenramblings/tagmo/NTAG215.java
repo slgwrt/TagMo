@@ -61,7 +61,7 @@ public class NTAG215 {
 
     public void writePage(int pageOffset, byte[] data) throws IOException {
         if (m_mifare != null) {
-            m_mifare.writePage(pageOffset, data);
+            //m_mifare.writePage(pageOffset, data);
         } else if (m_nfcA != null) {
             validatePageIndex(pageOffset);
             //m_nfcA.checkConnected();
