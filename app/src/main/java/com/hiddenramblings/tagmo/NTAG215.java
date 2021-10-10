@@ -71,7 +71,7 @@ public class NTAG215 {
             cmd[1] = (byte) pageOffset;
             System.arraycopy(data, 0, cmd, 2, data.length);
 
-            m_nfcA.transceive(cmd);
+           // m_nfcA.transceive(cmd);
         }
     }
 
