@@ -2,18 +2,11 @@ package com.hiddenramblings.tagmo;
 
 import com.hiddenramblings.tagmo.ptag.PTagKeyManager;
 
-import android.nfc.Tag;
-import android.nfc.tech.MifareUltralight;
-import android.nfc.tech.NfcA;
-
 import java.io.IOException;
 
 public class TagWriter {
-  private final MifareUltralight m_mifare;
-    private final NfcA m_nfcA;
-      private static final int NXP_MANUFACTURER_ID = 0x04;
-
-        private static final String TAG = TagWriter.class.getSimpleName();
+  
+    private static final String TAG = TagWriter.class.getSimpleName();
     
 
     private static final byte[] POWERTAG_SIGNATURE = Util.hexStringToByteArray("213C65444901602985E9F6B50CACB9C8CA3C4BCD13142711FF571CF01E66BD6F");
@@ -21,30 +14,7 @@ public class TagWriter {
     private static final String POWERTAG_KEY = "FFFFFFFFFFFFFFFF0000000000000000";
     private static final byte[] COMP_WRITE_CMD = Util.hexStringToByteArray("a000");
     private static final byte[] SIG_CMD = Util.hexStringToByteArray("3c00");
-        public static final int CMD_WRITE = 0xA2;
-
-public TagWriter(MifareUltralight mifare) {
-        m_nfcA = null;
-        m_mifare = mifare;
-    }
-
-    public TagWriter(NfcA nfcA) {
-        m_nfcA = nfcA;
-        m_mifare = null;
-    }
-
-    public static TagWriter get(Tag tag) {
-        MifareUltralight mifare = MifareUltralight.get(tag);
-        if (mifare != null)
-            return new TagWriter(mifare);
-        NfcA nfcA = NfcA.get(tag);
-        if (nfcA != null) {
-            if (nfcA.getSak() == 0x00 && tag.getId()[0] == NXP_MANUFACTURER_ID)
-                return new TagWriter(nfcA);
-        }
-
-        return null;
-    }
+    public static final int CMD_WRITE = 0xA2;
         
     public static void writeToTagRaw(NTAG215 mifare, byte[] tagData, boolean validateNtag) throws Exception {
         validate(mifare, tagData, validateNtag);
@@ -258,8 +228,7 @@ public TagWriter(MifareUltralight mifare) {
     static void writePages(NTAG215 tag, int pagestart, int pageend, byte[][] data) throws Exception {
         byte[] bigdata = new byte[(pageend-pagestart+1)*6];
         for (int i = pagestart,j = 0; i <= pageend; i++,j ++) {
-            //tag.writePage(i, data[i]);//old
-            MifareUltralight.writePage(i, data[i]);
+            tag.writePage(i, data[i]);
             
             TagMo.Debug(TAG, R.string.write_page, String.valueOf(i));
            //writepage-cdoe
