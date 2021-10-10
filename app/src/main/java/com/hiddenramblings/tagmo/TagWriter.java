@@ -34,11 +34,11 @@ public TagWriter(MifareUltralight mifare) {
     public static TagWriter get(Tag tag) {
         MifareUltralight mifare = MifareUltralight.get(tag);
         if (mifare != null)
-            return new NTAG215(mifare);
+            return new TagWriter(mifare);
         NfcA nfcA = NfcA.get(tag);
         if (nfcA != null) {
             if (nfcA.getSak() == 0x00 && tag.getId()[0] == NXP_MANUFACTURER_ID)
-                return new NTAG215(nfcA);
+                return new TagWriter(nfcA);
         }
 
         return null;
