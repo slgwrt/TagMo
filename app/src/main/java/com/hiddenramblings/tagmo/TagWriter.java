@@ -259,7 +259,7 @@ public TagWriter(MifareUltralight mifare) {
         byte[] bigdata = new byte[(pageend-pagestart+1)*6];
         for (int i = pagestart,j = 0; i <= pageend; i++,j ++) {
             //tag.writePage(i, data[i]);//old
-            m_mifare.writePage(i, data[i]);
+            MifareUltralight.writePage(i, data[i]);
             
             TagMo.Debug(TAG, R.string.write_page, String.valueOf(i));
            //writepage-cdoe
