@@ -20,7 +20,11 @@ public class TagWriter {
     private static final byte[] SIG_CMD = Util.hexStringToByteArray("3c00");
         public static final int CMD_WRITE = 0xA2;
 
-
+public TagWriter(MifareUltralight mifare) {
+        m_nfcA = null;
+        m_mifare = mifare;
+    }
+        
     public static void writeToTagRaw(NTAG215 mifare, byte[] tagData, boolean validateNtag) throws Exception {
         validate(mifare, tagData, validateNtag);
 
