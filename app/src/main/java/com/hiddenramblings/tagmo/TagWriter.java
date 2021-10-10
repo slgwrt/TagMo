@@ -11,6 +11,8 @@ import java.io.IOException;
 public class TagWriter {
   private final MifareUltralight m_mifare;
     private final NfcA m_nfcA;
+      private static final int NXP_MANUFACTURER_ID = 0x04;
+
         private static final String TAG = TagWriter.class.getSimpleName();
     
 
