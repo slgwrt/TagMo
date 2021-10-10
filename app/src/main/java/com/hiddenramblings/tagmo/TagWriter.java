@@ -9,7 +9,7 @@ import android.nfc.tech.NfcA;
 import java.io.IOException;
 
 public class TagWriter {
-        private final MifareUltralight m_mifare
+        private final MifareUltralight m_mifare;
     private static final String TAG = TagWriter.class.getSimpleName();
     
 
