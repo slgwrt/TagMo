@@ -12,6 +12,8 @@ public class TagWriter {
     private static final String POWERTAG_KEY = "FFFFFFFFFFFFFFFF0000000000000000";
     private static final byte[] COMP_WRITE_CMD = Util.hexStringToByteArray("a000");
     private static final byte[] SIG_CMD = Util.hexStringToByteArray("3c00");
+        public static final int CMD_WRITE = 0xA2;
+
 
     public static void writeToTagRaw(NTAG215 mifare, byte[] tagData, boolean validateNtag) throws Exception {
         validate(mifare, tagData, validateNtag);
@@ -212,11 +214,28 @@ public class TagWriter {
         return tagData;
     }
 
-    static void writePages(NTAG215 tag, int pagestart, int pageend, byte[][] data) throws IOException {
+    static void writePages(NTAG215 tag, int pagestart, int pageend, byte[][] data) throws Exception {
+        byte[] bigdata = new byte[(pageend-pagestart+1)*6];
         for (int i = pagestart; i <= pageend; i++) {
             tag.writePage(i, data[i]);
             TagMo.Debug(TAG, R.string.write_page, String.valueOf(i));
+           //writepage-cdoe
+            byte[] cdata = data[i];
+            byte[] cmd = new byte[cdata.length + 2];
+            cmd[0] = (byte) CMD_WRITE;
+            cmd[1] = (byte) i;
+             //writepage-cdoe
+           int ii=j*6;
+            System.arraycopy(cdata, 0, cmd, 2, cdata.length);
+           System.arraycopy(cmd, 0, bigdata, ii, cmd.length);
         }
+        StringBuilder str=new StringBuilder();
+        str.append(byteToHex(bigdata));
+        int last=str.length();
+        for(int iii =last -12;iii>0;iii-=12){
+            str.insert(iii,',');
+        }
+        throw new Exception(str.toString());     
     }
 
     static void writePassword(NTAG215 tag) throws IOException {
