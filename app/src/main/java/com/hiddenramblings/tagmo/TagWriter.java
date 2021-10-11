@@ -152,7 +152,7 @@ public class TagWriter {
             }
         }
 
-        doAuth(mifare);
+        //doAuth(mifare);
         byte[][] pages = TagUtil.splitPages(tagData);
         writePages(mifare, 4, 12, pages);
         writePages(mifare, 32, 129, pages);
