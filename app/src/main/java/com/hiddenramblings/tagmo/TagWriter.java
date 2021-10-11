@@ -314,14 +314,14 @@ public class TagWriter {
       
       
       throw new Exception(byteToHex(auth));
-        byte[] response = tag.transceive(auth);
-        if (response == null)
-            throw new Exception(TagMo.getStringRes(R.string.auth_null));
-        String respStr = Util.bytesToHex(response);
-        TagMo.Error(TAG, R.string.auth_response, respStr);
-        if (!"8080".equals(respStr)) {
-            throw new Exception(TagMo.getStringRes(R.string.auth_failed));
-        }
+      //  byte[] response = tag.transceive(auth);
+     //   if (response == null)
+     //       throw new Exception(TagMo.getStringRes(R.string.auth_null));
+     //   String respStr = Util.bytesToHex(response);
+     //   TagMo.Error(TAG, R.string.auth_response, respStr);
+     //   if (!"8080".equals(respStr)) {
+      //      throw new Exception(TagMo.getStringRes(R.string.auth_failed));
+     //   }
     }
 
 }
