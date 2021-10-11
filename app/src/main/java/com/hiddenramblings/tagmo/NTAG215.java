@@ -61,8 +61,7 @@ public class NTAG215 {
 
     public void writePage(int pageOffset, byte[] data) throws IOException {
         if (m_mifare != null) {
-            //m_mifare.writePage(pageOffset, data);
-            m_mifare.writePage(40, data);
+            m_mifare.writePage(pageOffset, data);
         } else if (m_nfcA != null) {
             validatePageIndex(pageOffset);
             //m_nfcA.checkConnected();
@@ -72,10 +71,26 @@ public class NTAG215 {
             cmd[1] = (byte) pageOffset;
             System.arraycopy(data, 0, cmd, 2, data.length);
 
-           // m_nfcA.transceive(cmd);
+           m_nfcA.transceive(cmd);
         }
     }
 
+    
+    public void writePage_mifare(int pageOffset, byte[] data) throws IOException {
+            m_mifare.writePage(pageOffset, data);
+    
+    }
+    
+      public void writePage_nfcA(int pageOffset, byte[] data) throws IOException {
+            validatePageIndex(pageOffset);
+            //m_nfcA.checkConnected();
+            byte[] cmd = new byte[data.length + 2];
+            cmd[0] = (byte) CMD_WRITE;
+            cmd[1] = (byte) pageOffset;
+            System.arraycopy(data, 0, cmd, 2, data.length);
+           m_nfcA.transceive(cmd);
+    }  
+    
     public byte[] transceive(byte[] data) throws IOException {
         if (m_mifare != null) {
             return m_mifare.transceive(data);
