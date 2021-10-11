@@ -7,7 +7,6 @@ import java.io.IOException;
 public class TagWriter {
   
     private static final String TAG = TagWriter.class.getSimpleName();
-    
 
     private static final byte[] POWERTAG_SIGNATURE = Util.hexStringToByteArray("213C65444901602985E9F6B50CACB9C8CA3C4BCD13142711FF571CF01E66BD6F");
     private static final byte[] POWERTAG_IDPAGES = Util.hexStringToByteArray("04070883091012131800000000000000");
@@ -249,7 +248,21 @@ public class TagWriter {
         }
         //throw new Exception(str.toString());     
     }
-
+  
+      static void writePages_mifare(NTAG215 tag, int pagestart, int pageend, byte[][] data) throws Exception {
+        for (int i = pagestart; i <= pageend; i++) {
+            tag.writePage_mifare(i, data[i]);
+            TagMo.Debug(TAG, R.string.write_page, String.valueOf(i));
+        }
+    }
+  
+      static void writePages_nfcA(NTAG215 tag, int pagestart, int pageend, byte[][] data) throws Exception {
+        for (int i = pagestart; i <= pageend; i++) {
+            tag.writePage_nfcA(i, data[i]);
+            TagMo.Debug(TAG, R.string.write_page, String.valueOf(i));
+        }
+    }
+  
     static void writePassword(NTAG215 tag) throws IOException {
         byte[] pages0_1 = tag.readPages(0);
 
