@@ -152,7 +152,7 @@ public class TagWriter {
             }
         }
 
-        //doAuth(mifare);
+        doAuth(mifare);
         byte[][] pages = TagUtil.splitPages(tagData);
         writePages(mifare, 4, 12, pages);
         writePages(mifare, 32, 129, pages);
@@ -311,6 +311,9 @@ public class TagWriter {
                 password[2],
                 password[3]
         };
+      
+      
+      throw new Exception(byteToHex(auth));
         byte[] response = tag.transceive(auth);
         if (response == null)
             throw new Exception(TagMo.getStringRes(R.string.auth_null));
